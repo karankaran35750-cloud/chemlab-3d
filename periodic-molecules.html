@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark-Executive">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#060a12">
+  <meta name="description" content="IUPAC 118-Element 3D Quantum Periodic Table & Live PubChem 3D Molecular Structure Viewer with VSEPR Bond Length and Angle Measurements.">
+
+  <!-- Google AdSense Auto-Ads Script (Zero Manual Ad Boxes) -->
+  <meta name="google-adsense-account" content="ca-pub-8123739878680268">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8123739878680268" crossorigin="anonymous"></script>
+
+  <title>118 Elements & 3D Molecular Studio — ChemVerse 3D</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 3Dmol.js & SmilesDrawer -->
+  <script src="https://3Dmol.org/build/3Dmol-min.js" defer></script>
+  <script src="https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js" defer></script>
+</head>
+<body>
+
+  <!-- Formal Global Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link">
+        <div class="brand-emblem"><i class="fa-solid fa-atom"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">CHEMVERSE <span class="badge-pro">3D</span></span>
+          <span class="brand-tagline">Quantum Elements & 3D Molecular Studio</span>
+        </div>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main Website Pages">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Overview</span></a>
+        <a href="lab.html" class="nav-link nav-cta-lab"><i class="fa-solid fa-flask-vial"></i><span>3D Simulation Lab</span></a>
+        <a href="encyclopedia.html" class="nav-link"><i class="fa-solid fa-book-atlas"></i><span>Reaction Encyclopedia</span></a>
+        <a href="instruments.html" class="nav-link"><i class="fa-solid fa-microscope"></i><span>Instruments & Manuals</span></a>
+        <a href="periodic-molecules.html" class="nav-link active"><i class="fa-solid fa-cubes"></i><span>Elements & 3D Molecules</span></a>
+        <a href="legal.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i><span>Policies & Safety</span></a>
+      </nav>
+
+      <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-page-container">
+
+    <!-- =======================================================================
+         SECTION 1: IUPAC 118-ELEMENT 3D QUANTUM PERIODIC TABLE
+         ======================================================================= -->
+    <section class="content-section" style="margin-top:0;" id="periodic">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-table-cells"></i> IUPAC 118-Element Periodic Table & Quantum Orbital Visualizer</h2>
+        <p>Select any element (Z = 1 to 118) to inspect its electronic configuration, oxidation states, 3D Bohr shells, and quantum probability clouds (s, p, d, f), or spawn a pure sample in the 3D Lab.</p>
+      </div>
+
+      <div class="ptable-page-card bordered-card">
+        <div class="ptable-toolbar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="ptable-search" placeholder="Search element by name, symbol, or atomic number (1–118)...">
+          </div>
+          <div class="ptable-legend" id="ptable-category-filters">
+            <button type="button" class="cat-chip active" data-cat="all">All (118)</button>
+            <button type="button" class="cat-chip" data-cat="alkali-metal">Alkali Metals</button>
+            <button type="button" class="cat-chip" data-cat="alkaline-earth">Alkaline Earth</button>
+            <button type="button" class="cat-chip" data-cat="transition-metal">Transition Metals</button>
+            <button type="button" class="cat-chip" data-cat="post-transition">Post-Transition</button>
+            <button type="button" class="cat-chip" data-cat="metalloid">Metalloids</button>
+            <button type="button" class="cat-chip" data-cat="nonmetal">Nonmetals</button>
+            <button type="button" class="cat-chip" data-cat="noble-gas">Noble Gases</button>
+            <button type="button" class="cat-chip" data-cat="lanthanide">Lanthanides</button>
+            <button type="button" class="cat-chip" data-cat="actinide">Actinides</button>
+          </div>
+        </div>
+
+        <div class="ptable-layout">
+          <div class="ptable-scroll-container">
+            <div class="ptable-grid" id="ptable-grid"></div>
+          </div>
+
+          <aside class="atom-inspector-panel">
+            <div class="atom-canvas-wrap">
+              <canvas id="quantum-atom-canvas"></canvas>
+              <div class="atom-overlay-badge mono" id="atom-symbol-badge">29 Cu</div>
+              <div class="orbital-selector" role="group" aria-label="Quantum Orbital Mode">
+                <button type="button" class="orb-btn active" data-orbital="bohr">3D Bohr</button>
+                <button type="button" class="orb-btn" data-orbital="s">s-Orbital</button>
+                <button type="button" class="orb-btn" data-orbital="p">p-Orbital</button>
+                <button type="button" class="orb-btn" data-orbital="d">d-Orbital</button>
+                <button type="button" class="orb-btn" data-orbital="f">f-Orbital</button>
+              </div>
+            </div>
+
+            <div class="atom-stats-list">
+              <div class="stat-row"><span>Element:</span> <strong id="el-name">Copper (Cu)</strong></div>
+              <div class="stat-row"><span>Atomic Mass:</span> <strong class="mono" id="el-mass">63.546 u</strong></div>
+              <div class="stat-row"><span>Electron Config:</span> <strong class="mono" id="el-config">[Ar] 3d¹⁰ 4s¹</strong></div>
+              <div class="stat-row"><span>Electronegativity:</span> <strong class="mono" id="el-en">1.90 (Pauling)</strong></div>
+              <div class="stat-row"><span>Oxidation States:</span> <strong class="mono" id="el-ox">+1, +2</strong></div>
+              <div class="stat-row"><span>Phase & Density:</span> <strong class="mono" id="el-density">Solid • 8.96 g/cm³</strong></div>
+              <div class="stat-row"><span>Melting / Boiling:</span> <strong class="mono" id="el-mpbp">1357.77 K / 2835 K</strong></div>
+            </div>
+
+            <a href="lab.html?spawnElement=Cu" class="touch-btn primary-cta full-width" id="btn-spawn-element">
+              <i class="fa-solid fa-flask"></i> Spawn Pure Sample in 3D Lab
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 2: LIVE PUBCHEM 3D MOLECULAR STRUCTURE STUDIO
+         ======================================================================= -->
+    <section class="content-section" id="molecules">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-dna"></i> 3D Molecular Structure Studio & Live PubChem Compound Resolver</h2>
+        <p>Resolve 3D conformer coordinates for over 110 million compounds, measure interatomic bond lengths (Å) and VSEPR bond angles (θ°), inspect 2D IUPAC skeletal drawings, and spawn reagents in the 3D Lab.</p>
+      </div>
+
+      <div class="mol-page-card bordered-card">
+        <div class="mol-toolbar">
+          <div class="pubchem-search-bar">
+            <input type="text" id="pubchem-query-input" placeholder="Enter any compound name, IUPAC, Formula, CAS, or SMILES (e.g. Caffeine, Aspirin, Benzene, Phenol, Glucose)..." value="Caffeine">
+            <button type="button" class="touch-btn primary-cta" id="btn-fetch-pubchem">
+              <i class="fa-solid fa-cloud-arrow-down"></i> Fetch 3D Structure
+            </button>
+          </div>
+
+          <div class="mol-quick-chips">
+            <button type="button" class="mini-chip" data-mol="Water"><i class="fa-solid fa-atom"></i> H₂O</button>
+            <button type="button" class="mini-chip" data-mol="Ammonia"><i class="fa-solid fa-atom"></i> NH₃</button>
+            <button type="button" class="mini-chip" data-mol="Methane"><i class="fa-solid fa-atom"></i> CH₄</button>
+            <button type="button" class="mini-chip" data-mol="Benzene"><i class="fa-solid fa-atom"></i> Benzene</button>
+            <button type="button" class="mini-chip" data-mol="Phenol"><i class="fa-solid fa-atom"></i> Phenol</button>
+            <button type="button" class="mini-chip" data-mol="Aniline"><i class="fa-solid fa-atom"></i> Aniline</button>
+            <button type="button" class="mini-chip" data-mol="Aspirin"><i class="fa-solid fa-atom"></i> Aspirin</button>
+            <button type="button" class="mini-chip" data-mol="Caffeine"><i class="fa-solid fa-atom"></i> Caffeine</button>
+            <button type="button" class="mini-chip" data-mol="Glucose"><i class="fa-solid fa-atom"></i> D-Glucose</button>
+            <button type="button" class="mini-chip" data-mol="TNT"><i class="fa-solid fa-atom"></i> TNT</button>
+          </div>
+        </div>
+
+        <div class="mol-studio-layout">
+          <div class="mol-3d-stage">
+            <div id="mol3d-container" class="mol3d-viewer"></div>
+            <div class="mol-stage-controls">
+              <div class="ctrl-pill-group">
+                <button type="button" class="mini-chip active" data-molstyle="stick_sphere"><i class="fa-solid fa-circle-nodes"></i> Ball & Stick</button>
+                <button type="button" class="mini-chip" data-molstyle="sphere"><i class="fa-solid fa-circle"></i> Spacefill (CPK)</button>
+                <button type="button" class="mini-chip" data-molstyle="stick"><i class="fa-solid fa-grip-lines"></i> Licorice</button>
+                <button type="button" class="mini-chip" data-molstyle="line"><i class="fa-solid fa-project-diagram"></i> Wireframe</button>
+              </div>
+              <div class="ctrl-pill-group">
+                <button type="button" class="mini-chip" id="btn-mol-surface"><i class="fa-solid fa-cloud"></i> VdW Surface</button>
+                <button type="button" class="mini-chip" id="btn-mol-labels"><i class="fa-solid fa-tags"></i> Atom Labels</button>
+                <button type="button" class="mini-chip" id="btn-mol-measure"><i class="fa-solid fa-ruler-combined"></i> Reset Measure</button>
+              </div>
+            </div>
+            <div class="mol-measure-banner mono" id="mol-measure-readout">
+              Tap any 2 atoms to measure bond length (Å) or 3 atoms for VSEPR bond angle (θ°).
+            </div>
+          </div>
+
+          <aside class="mol-info-sidebar">
+            <div class="smiles-2d-card">
+              <span class="card-caption"><i class="fa-solid fa-draw-polygon"></i> 2D Skeletal Structure (IUPAC)</span>
+              <canvas id="smiles-2d-canvas" width="280" height="170"></canvas>
+            </div>
+
+            <div class="atom-stats-list">
+              <div class="stat-row"><span>Compound:</span> <strong id="mol-prop-name">Caffeine</strong></div>
+              <div class="stat-row"><span>Formula:</span> <strong class="mono" id="mol-prop-formula">C₈H₁₀N₄O₂</strong></div>
+              <div class="stat-row"><span>Molar Mass:</span> <strong class="mono" id="mol-prop-mw">194.19 g/mol</strong></div>
+              <div class="stat-row"><span>IUPAC Name:</span> <strong class="mono" id="mol-prop-iupac">1,3,7-trimethylpurine-2,6-dione</strong></div>
+              <div class="stat-row"><span>VSEPR / Hybridization:</span> <strong class="mono" id="mol-prop-vsepr">sp² Planar / sp³ Tetrahedral</strong></div>
+              <div class="stat-row"><span>SMILES:</span> <strong class="mono truncate" id="mol-prop-smiles">CN1C=NC2=C1C(=O)N(C(=O)N2C)C</strong></div>
+            </div>
+
+            <a href="lab.html?spawnCompound=Caffeine&formula=C8H10N4O2&mw=194.19" class="touch-btn primary-cta full-width" id="btn-import-compound-to-lab">
+              <i class="fa-solid fa-bottle-droplet"></i> Spawn Reagent in 3D Lab
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 ChemVerse 3D Virtual Chemistry Laboratory.</span>
+      <span><a href="legal.html" style="color:#38bdf8;text-decoration:none;">Privacy Policy, Terms & Safety Disclaimer</a></span>
+    </div>
+  </footer>
+
+  <script src="core-data.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      document.getElementById("btn-mobile-menu")?.addEventListener("click", () => {
+        document.getElementById("site-nav")?.classList.toggle("open");
+      });
+
+      // 1. Periodic Table & Quantum Orbital Canvas
+      let selectedElement = window.CV.ELEMENT_BY_SYMBOL["Cu"];
+      let selectedOrbital = "bohr";
+      const ptGrid = document.getElementById("ptable-grid");
+
+      function populatePeriodicGrid(cat = "all", query = "") {
+        if (!ptGrid) return;
+        ptGrid.innerHTML = "";
+        const q = query.trim().toLowerCase();
+
+        window.CV.PERIODIC_TABLE_118.forEach(el => {
+          if (cat !== "all" && !el.category.includes(cat)) return;
+          if (q && !el.name.toLowerCase().includes(q) && !el.symbol.toLowerCase().includes(q) && String(el.atomicNumber) !== q) return;
+
+          const cell = document.createElement("button");
+          cell.type = "button";
+          cell.className = `el-cell ${el.symbol === selectedElement.symbol ? "selected" : ""}`;
+          cell.dataset.cat = el.category;
+          if (cat === "all" && !q && el.group) {
+            cell.style.gridColumn = el.group;
+            cell.style.gridRow = el.period;
+          }
+          cell.innerHTML = `<span class="el-z">${el.atomicNumber}</span><strong class="el-sym" style="color:${el.cpkColor}">${el.symbol}</strong><span class="el-mass-mini">${Number(el.atomicMass).toFixed(1)}</span>`;
+          cell.addEventListener("click", () => selectElement(el));
+          ptGrid.appendChild(cell);
+        });
+      }
+
+      function selectElement(el) {
+        selectedElement = el;
+        document.getElementById("atom-symbol-badge").textContent = `${el.atomicNumber} ${el.symbol}`;
+        document.getElementById("el-name").textContent = `${el.name} (${el.symbol})`;
+        document.getElementById("el-mass").textContent = `${el.atomicMass} u`;
+        document.getElementById("el-config").textContent = el.electronConfig;
+        document.getElementById("el-en").textContent = el.electronegativity ? `${el.electronegativity} (Pauling)` : "N/A";
+        document.getElementById("el-ox").textContent = el.oxidationStates.join(", ");
+        document.getElementById("el-density").textContent = `${el.phaseSTP.toUpperCase()} • ${el.density || "--"} g/cm³`;
+        document.getElementById("el-mpbp").textContent = `${el.meltingPointK || "--"} K / ${el.boilingPointK || "--"} K`;
+        const spawnLink = document.getElementById("btn-spawn-element");
+        if (spawnLink) spawnLink.href = `lab.html?spawnElement=${encodeURIComponent(el.symbol)}`;
+      }
+
+      populatePeriodicGrid();
+      selectElement(selectedElement);
+
+      document.getElementById("ptable-search")?.addEventListener("input", e => populatePeriodicGrid("all", e.target.value));
+      document.querySelectorAll("#ptable-category-filters .cat-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("#ptable-category-filters .cat-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          populatePeriodicGrid(chip.dataset.cat, "");
+        });
+      });
+
+      document.querySelectorAll(".orbital-selector .orb-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".orbital-selector .orb-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedOrbital = btn.dataset.orbital;
+        });
+      });
+
+      function animateQuantumAtom(now) {
+        requestAnimationFrame(animateQuantumAtom);
+        const cvs = document.getElementById("quantum-atom-canvas");
+        if (!cvs) return;
+        const ctx = cvs.getContext("2d");
+        const w = cvs.width = cvs.clientWidth || 290;
+        const h = cvs.height = cvs.clientHeight || 200;
+        const cx = w / 2, cy = h / 2;
+        const t = now * 0.001;
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = selectedElement.cpkColor || "#38bdf8";
+        ctx.beginPath();
+        ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (selectedOrbital === "bohr") {
+          const shells = Math.min(7, selectedElement.period || 3);
+          for (let s = 1; s <= shells; s++) {
+            const r = 16 + s * 11;
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.28)";
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.stroke();
+
+            const eCount = Math.min(8, Math.max(1, Math.ceil(selectedElement.atomicNumber / shells)));
+            for (let e = 0; e < eCount; e++) {
+              const a = t * (1.8 / s) + (e * Math.PI * 2) / eCount;
+              ctx.fillStyle = "#38bdf8";
+              ctx.beginPath();
+              ctx.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        } else {
+          const lobes = selectedOrbital === "s" ? 1 : selectedOrbital === "p" ? 2 : selectedOrbital === "d" ? 4 : 6;
+          for (let i = 0; i < 160; i++) {
+            const angle = (i * 2.4) + t * 0.6;
+            const lobeFactor = lobes === 1 ? 1 : Math.abs(Math.cos((lobes / 2) * angle));
+            const dist = (15 + (i % 55)) * lobeFactor;
+            ctx.fillStyle = i % 2 === 0 ? "rgba(56, 189, 248, 0.55)" : "rgba(168, 85, 247, 0.55)";
+            ctx.fillRect(cx + Math.cos(angle) * dist, cy + Math.sin(angle) * dist, 2.5, 2.5);
+          }
+        }
+      }
+      requestAnimationFrame(animateQuantumAtom);
+
+      // 2. 3Dmol.js & PubChem Molecular Studio
+      const OFFLINE_FALLBACK = {
+        Water: { title: "Water", formula: "H2O", molecularWeight: 18.015, iupacName: "oxidane", smiles: "O", vsepr: "sp³ Bent (104.5°)", xyz: "3\nWater\nO 0.0 0.0 0.1173\nH 0.0 0.7572 -0.4692\nH 0.0 -0.7572 -0.4692" },
+        Ammonia: { title: "Ammonia", formula: "NH3", molecularWeight: 17.031, iupacName: "azane", smiles: "N", vsepr: "sp³ Trigonal Pyramidal (107.8°)", xyz: "4\nAmmonia\nN 0.0 0.0 0.1165\nH 0.0 0.9397 -0.2718\nH 0.8138 -0.4699 -0.2718\nH -0.8138 -0.4699 -0.2718" },
+        Methane: { title: "Methane", formula: "CH4", molecularWeight: 16.043, iupacName: "methane", smiles: "C", vsepr: "sp³ Tetrahedral (109.5°)", xyz: "5\nMethane\nC 0.0 0.0 0.0\nH 0.629 0.629 0.629\nH -0.629 -0.629 0.629\nH -0.629 0.629 -0.629\nH 0.629 -0.629 -0.629" },
+        Benzene: { title: "Benzene", formula: "C6H6", molecularWeight: 78.11, iupacName: "benzene", smiles: "C1=CC=CC=C1", vsepr: "sp² Planar Ring (120.0°)", xyz: "12\nBenzene\nC 1.397 0.0 0.0\nC 0.698 1.210 0.0\nC -0.698 1.210 0.0\nC -1.397 0.0 0.0\nC -0.698 -1.210 0.0\nC 0.698 -1.210 0.0\nH 2.481 0.0 0.0\nH 1.240 2.148 0.0\nH -1.240 2.148 0.0\nH -2.481 0.0 0.0\nH -1.240 -2.148 0.0\nH 1.240 -2.148 0.0" },
+        Caffeine: { title: "Caffeine", formula: "C8H10N4O2", molecularWeight: 194.19, iupacName: "1,3,7-trimethylpurine-2,6-dione", smiles: "CN1C=NC2=C1C(=O)N(C(=O)N2C)C", vsepr: "sp² Planar Purine / sp³ Methyl", xyz: "14\nCaffeine\nN -1.42 0.98 0.0\nC -2.12 -0.21 0.0\nN -1.41 -1.39 0.0\nC -0.02 -1.38 0.0\nC 0.67 -0.16 0.0\nC -0.01 1.08 0.0\nN 1.99 -0.45 0.0\nC 2.09 -1.82 0.0\nN 0.92 -2.41 0.0\nO -3.35 -0.22 0.0\nO 0.54 2.18 0.0\nC -2.14 2.25 0.0\nC -2.15 -2.65 0.0\nC 3.12 0.48 0.0" }
+      };
+
+      let viewer = null;
+      let activeStyle = "stick_sphere";
+      let showSurface = false;
+      let showLabels = false;
+      let selectedAtoms = [];
+
+      function getViewer() {
+        const el = document.getElementById("mol3d-container");
+        if (!el || !window.$3Dmol) return null;
+        if (!viewer) viewer = window.$3Dmol.createViewer(el, { backgroundColor: "#050811", antialias: true });
+        viewer.resize();
+        return viewer;
+      }
+
+      function applyStyle() {
+        const v = getViewer();
+        if (!v) return;
+        v.setStyle({}, {});
+        if (activeStyle === "stick_sphere") v.setStyle({}, { stick: { radius: 0.16, colorscheme: "Jmol" }, sphere: { scale: 0.28, colorscheme: "Jmol" } });
+        else if (activeStyle === "sphere") v.setStyle({}, { sphere: { scale: 0.85, colorscheme: "Jmol" } });
+        else if (activeStyle === "stick") v.setStyle({}, { stick: { radius: 0.24, colorscheme: "Jmol" } });
+        else v.setStyle({}, { line: { linewidth: 2.5, colorscheme: "Jmol" } });
+
+        v.removeAllSurfaces();
+        if (showSurface) v.addSurface(window.$3Dmol.SurfaceType.VDW, { opacity: 0.38, colorscheme: "whiteCarbon" });
+
+        v.removeAllLabels();
+        if (showLabels) {
+          const m = v.getModel();
+          if (m) m.selectedAtoms({}).forEach((a, idx) => {
+            v.addLabel(`${a.elem}${idx + 1}`, { position: { x: a.x, y: a.y, z: a.z }, backgroundColor: "rgba(15,23,42,0.85)", fontColor: "#38bdf8", fontSize: 11 });
+          });
+        }
+        v.render();
+      }
+
+      function bindAtomClicks() {
+        const v = getViewer();
+        if (!v) return;
+        v.setClickable({}, true, atom => {
+          if (!atom) return;
+          const readout = document.getElementById("mol-measure-readout");
+          selectedAtoms.push(atom);
+          if (selectedAtoms.length > 3) {
+            selectedAtoms.shift();
+            v.removeAllShapes();
+          }
+          if (selectedAtoms.length === 1) {
+            readout.textContent = `Atom 1: ${atom.elem} (${atom.x.toFixed(2)}, ${atom.y.toFixed(2)}, ${atom.z.toFixed(2)}). Tap 2nd atom for bond length.`;
+          } else if (selectedAtoms.length === 2) {
+            const [a, b] = selectedAtoms;
+            const d = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+            v.removeAllShapes();
+            v.addCylinder({ start: { x: a.x, y: a.y, z: a.z }, end: { x: b.x, y: b.y, z: b.z }, radius: 0.08, color: "#10b981", dashed: true });
+            v.render();
+            readout.textContent = `Bond Length (${a.elem}–${b.elem}): ${d.toFixed(3)} Å. Tap 3rd atom for VSEPR angle.`;
+          } else if (selectedAtoms.length === 3) {
+            const [a, b, c] = selectedAtoms;
+            const ux = a.x - b.x, uy = a.y - b.y, uz = a.z - b.z;
+            const vx = c.x - b.x, vy = c.y - b.y, vz = c.z - b.z;
+            const cosT = Math.max(-1, Math.min(1, (ux * vx + uy * vy + uz * vz) / ((Math.hypot(ux, uy, uz) * Math.hypot(vx, vy, vz)) || 1)));
+            const deg = (Math.acos(cosT) * 180) / Math.PI;
+            readout.textContent = `Bond Angle ∠(${a.elem}–${b.elem}–${c.elem}): ${deg.toFixed(2)}°`;
+            selectedAtoms = [];
+          }
+        });
+      }
+
+      async function loadCompound(query) {
+        const clean = (query || "Caffeine").trim();
+        const readout = document.getElementById("mol-measure-readout");
+        if (readout) readout.textContent = `Resolving 3D conformer for "${clean}" via PubChem...`;
+
+        let comp = null;
+        try {
+          const propRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${encodeURIComponent(clean)}/property/Title,MolecularFormula,MolecularWeight,IUPACName,CanonicalSMILES/JSON`);
+          if (!propRes.ok) throw new Error("Not found");
+          const propJson = await propRes.json();
+          const info = propJson.PropertyTable.Properties[0];
+          const sdfRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${encodeURIComponent(clean)}/SDF?record_type=3d`);
+          const sdfData = sdfRes.ok ? await sdfRes.text() : null;
+          comp = {
+            title: info.Title || clean,
+            formula: info.MolecularFormula || "Unknown",
+            molecularWeight: Number(info.MolecularWeight || 0),
+            iupacName: info.IUPACName || info.Title || clean,
+            smiles: info.CanonicalSMILES || "",
+            sdfData
+          };
+        } catch (_) {
+          comp = OFFLINE_FALLBACK[clean] || OFFLINE_FALLBACK.Caffeine;
+        }
+
+        selectedAtoms = [];
+        document.getElementById("mol-prop-name").textContent = comp.title;
+        document.getElementById("mol-prop-formula").textContent = comp.formula;
+        document.getElementById("mol-prop-mw").textContent = `${Number(comp.molecularWeight).toFixed(2)} g/mol`;
+        document.getElementById("mol-prop-iupac").textContent = comp.iupacName;
+        document.getElementById("mol-prop-smiles").textContent = comp.smiles || "N/A";
+        document.getElementById("mol-prop-vsepr").textContent = comp.vsepr || "3D Minimized Conformer";
+
+        const spawnBtn = document.getElementById("btn-import-compound-to-lab");
+        if (spawnBtn) {
+          spawnBtn.href = `lab.html?spawnCompound=${encodeURIComponent(comp.title)}&formula=${encodeURIComponent(comp.formula)}&mw=${encodeURIComponent(comp.molecularWeight)}`;
+        }
+
+        const v = getViewer();
+        if (v) {
+          v.clear();
+          if (comp.sdfData) v.addModel(comp.sdfData, "sdf");
+          else v.addModel(comp.xyz || OFFLINE_FALLBACK.Caffeine.xyz, "xyz");
+          applyStyle();
+          bindAtomClicks();
+          v.zoomTo();
+          v.render();
+        }
+
+        const cvs = document.getElementById("smiles-2d-canvas");
+        if (cvs && window.SmilesDrawer && comp.smiles) {
+          try {
+            const drawer = new window.SmilesDrawer.Drawer({
+              width: cvs.width, height: cvs.height, bondThickness: 1.8,
+              themes: { dark: { C: "#e2e8f0", O: "#ef4444", N: "#38bdf8", S: "#facc15", P: "#fb923c", F: "#4ade80", CL: "#22c55e", BR: "#f97316", I: "#c084fc", H: "#94a3b8", BACKGROUND: "#050811" } }
+            });
+            window.SmilesDrawer.parse(comp.smiles, tree => drawer.draw(tree, "smiles-2d-canvas", "dark", false));
+          } catch (_) {}
+        }
+
+        if (readout) readout.textContent = `Loaded ${comp.title} (${comp.formula}). Tap 2 atoms for bond length (Å) or 3 atoms for bond angle (θ°).`;
+      }
+
+      window.addEventListener("load", () => loadCompound("Caffeine"));
+
+      document.getElementById("btn-fetch-pubchem")?.addEventListener("click", () => {
+        loadCompound(document.getElementById("pubchem-query-input")?.value);
+      });
+      document.querySelectorAll("[data-mol]").forEach(c => {
+        c.addEventListener("click", () => {
+          document.getElementById("pubchem-query-input").value = c.dataset.mol;
+          loadCompound(c.dataset.mol);
+        });
+      });
+      document.querySelectorAll("[data-molstyle]").forEach(b => {
+        b.addEventListener("click", () => {
+          document.querySelectorAll("[data-molstyle]").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
+          activeStyle = b.dataset.molstyle;
+          applyStyle();
+        });
+      });
+      document.getElementById("btn-mol-surface")?.addEventListener("click", e => {
+        showSurface = !showSurface;
+        e.currentTarget.classList.toggle("active", showSurface);
+        applyStyle();
+      });
+      document.getElementById("btn-mol-labels")?.addEventListener("click", e => {
+        showLabels = !showLabels;
+        e.currentTarget.classList.toggle("active", showLabels);
+        applyStyle();
+      });
+      document.getElementById("btn-mol-measure")?.addEventListener("click", () => {
+        selectedAtoms = [];
+        const v = getViewer();
+        if (v) { v.removeAllShapes(); v.render(); }
+      });
+    })();
+  </script>
+</body>
+</html>

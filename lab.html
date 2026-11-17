@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark-Executive">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#050811">
+  <meta name="description" content="ChemVerse 3D Simulation Workbench — Ad-free interactive 3D chemistry laboratory with spatial multi-vessel heating, unrestricted reactions, and real-time stoichiometry.">
+
+  <!-- NO ADSENSE SCRIPTS ON THIS PAGE (100% AD-FREE SIMULATION ENVIRONMENT) -->
+  <title>3D Simulation Workbench — ChemVerse 3D Laboratory</title>
+
+  <!-- Typography & Real Vector Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Core 3D WebGL2 & Motion Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+</head>
+<body class="lab-body">
+
+  <!-- =========================================================================
+       1. COMPACT GLOBAL NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link" aria-label="Return to ChemVerse 3D Home">
+        <div class="brand-emblem">
+          <i class="fa-solid fa-atom"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">CHEMVERSE <span class="badge-pro">3D LAB</span></span>
+          <span class="brand-tagline">Spatial Physics & Unrestricted Sandbox</span>
+        </div>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Laboratory Navigation">
+        <a href="index.html" class="nav-link">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Overview</span>
+        </a>
+        <a href="lab.html" class="nav-link nav-cta-lab active">
+          <i class="fa-solid fa-flask-vial"></i>
+          <span>3D Simulation Lab</span>
+        </a>
+        <a href="encyclopedia.html" class="nav-link">
+          <i class="fa-solid fa-book-atlas"></i>
+          <span>Encyclopedia</span>
+        </a>
+        <a href="instruments.html" class="nav-link">
+          <i class="fa-solid fa-microscope"></i>
+          <span>Instruments & Manuals</span>
+        </a>
+        <a href="periodic-molecules.html" class="nav-link">
+          <i class="fa-solid fa-cubes"></i>
+          <span>Elements & 3D Molecules</span>
+        </a>
+        <a href="legal.html" class="nav-link">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <span>Policies</span>
+        </a>
+      </nav>
+
+      <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Toggle Navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. FULLSCREEN 3D WEBGL2 VIEWPORT & MULTI-VESSEL HUD
+       ========================================================================= -->
+  <main class="lab-fullscreen-view" id="page-lab">
+    <video id="ar-camera-feed" autoplay playsinline muted aria-hidden="true"></video>
+    <div id="lab-viewport">
+      <canvas id="lab-canvas"></canvas>
+    </div>
+
+    <!-- Top Edge-Hugging Manipulation & Telemetry HUD -->
+    <div class="lab-hud-top">
+      <!-- 3D Spatial Object Manipulation Mode Bar -->
+      <div class="transform-mode-bar hud-interactive" role="group" aria-label="3D Object Manipulation Modes">
+        <button type="button" class="touch-btn mode-btn active" data-manip="orbit" title="Orbit & Zoom 3D Camera">
+          <i class="fa-solid fa-camera-rotate"></i>
+          <span>Orbit</span>
+        </button>
+        <button type="button" class="touch-btn mode-btn" data-manip="move" title="Drag Any Beaker, Pot, or Burner Across Bench & Flame">
+          <i class="fa-solid fa-arrows-up-down-left-right"></i>
+          <span>Move 3D</span>
+        </button>
+        <button type="button" class="touch-btn mode-btn" data-manip="pour" title="Tilt Selected Vessel & Pour Into Target Vessel">
+          <i class="fa-solid fa-fill-drip"></i>
+          <span>Tilt/Pour</span>
+        </button>
+        <button type="button" class="touch-btn mode-btn" id="btn-add-extra-vessel" title="Place an Additional Pot/Flask on the Workbench">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Vessel</span>
+        </button>
+      </div>
+
+      <!-- Live Sensor Telemetry Strip -->
+      <div class="telemetry-strip hud-interactive" id="vessel-telemetry-strip">
+        <div class="sensor-cell">
+          <span class="s-lbl"><i class="fa-solid fa-glass-water"></i> SELECTED</span>
+          <strong class="s-val" id="hud-vessel-name">Beaker #1 (250mL)</strong>
+        </div>
+        <div class="sensor-cell">
+          <span class="s-lbl"><i class="fa-solid fa-fire"></i> ON FLAME</span>
+          <strong class="s-val" id="hud-heated-vessel">Beaker #1</strong>
+        </div>
+        <div class="sensor-cell">
+          <span class="s-lbl"><i class="fa-solid fa-ruler-vertical"></i> VOLUME</span>
+          <strong class="s-val mono" id="hud-vol">0.00 mL</strong>
+        </div>
+        <div class="sensor-cell">
+          <span class="s-lbl"><i class="fa-solid fa-temperature-half"></i> TEMP</span>
+          <strong class="s-val mono" id="hud-temp">25.0 °C</strong>
+        </div>
+        <div class="sensor-cell">
+          <span class="s-lbl"><i class="fa-solid fa-droplet"></i> DIGITAL pH</span>
+          <strong class="s-val mono" id="hud-ph">7.00</strong>
+        </div>
+        <div class="sensor-cell hide-xs">
+          <span class="s-lbl"><i class="fa-solid fa-bolt"></i> COND.</span>
+          <strong class="s-val mono" id="hud-cond">0.05 mS</strong>
+        </div>
+        <div class="sensor-cell hide-sm">
+          <span class="s-lbl"><i class="fa-solid fa-gauge-high"></i> FPS</span>
+          <strong class="s-val mono" id="fps-val">60</strong>
+        </div>
+      </div>
+
+      <!-- Right Utility Drawer Triggers -->
+      <div class="top-action-cluster hud-interactive">
+        <button type="button" class="touch-btn" id="btn-open-conditions" title="Set Temperature Bath, Pressure, UV Light & Catalyst">
+          <i class="fa-solid fa-sliders"></i>
+          <span class="btn-txt">Conditions</span>
+        </button>
+        <button type="button" class="touch-btn" id="btn-open-analytics" title="Real-Time pH Titration, Thermal & UV-Vis Plots">
+          <i class="fa-solid fa-chart-line"></i>
+          <span class="btn-txt">Graphs</span>
+        </button>
+        <button type="button" class="touch-btn" id="btn-open-customizer" title="Customize UI Scale, Physics & Custom Equations">
+          <i class="fa-solid fa-gear"></i>
+          <span class="btn-txt">Customizer</span>
+        </button>
+        <button type="button" class="touch-btn icon-only" id="btn-toggle-sfx" title="Toggle Web Audio Synthesizer">
+          <i class="fa-solid fa-volume-high" id="sfx-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Stoichiometry, Spatial Heating & Observation Banner -->
+    <section class="reaction-toast hud-interactive" id="reaction-toast" aria-live="polite">
+      <div class="toast-header">
+        <div class="toast-badges" id="reaction-state-badges">
+          <span class="state-pill neutral"><i class="fa-solid fa-circle-check"></i> 298.15 K • 1.00 atm • Unrestricted Mode</span>
+        </div>
+        <span class="enthalpy-pill mono" id="reaction-dh-badge">ΔH° = 0.0 kJ/mol</span>
+        <button type="button" class="toast-collapse-btn" id="btn-collapse-toast" title="Collapse Reaction Log">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="toast-body" id="reaction-toast-body">
+        <div class="eq-line mono" id="reaction-eq-text">
+          Tip: Select "Move 3D" to drag Beaker #1 off the burner and place Conical Flask #2 onto the flame to heat it!
+        </div>
+      </div>
+    </section>
+
+    <!-- Left Camera Viewpoint Presets -->
+    <aside class="left-cam-dock hud-interactive" aria-label="3D Camera Viewpoints">
+      <button type="button" class="touch-btn cam-btn active" data-cam="bench" title="Full Multi-Vessel Workbench Overview">
+        <i class="fa-solid fa-desktop"></i>
+        <small>Bench</small>
+      </button>
+      <button type="button" class="touch-btn cam-btn" data-cam="vessel" title="Focus on Selected Vessel">
+        <i class="fa-solid fa-glass-water"></i>
+        <small>Vessel</small>
+      </button>
+      <button type="button" class="touch-btn cam-btn" data-cam="burette" title="50mL Burette Meniscus View">
+        <i class="fa-solid fa-eye-dropper"></i>
+        <small>Burette</small>
+      </button>
+      <button type="button" class="touch-btn cam-btn" data-cam="burner" title="Bunsen Burner & Thermal Zone View">
+        <i class="fa-solid fa-fire"></i>
+        <small>Flame</small>
+      </button>
+      <button type="button" class="touch-btn cam-btn" data-cam="distill" title="Liebig Condenser & Reflux Assembly">
+        <i class="fa-solid fa-industry"></i>
+        <small>Reflux</small>
+      </button>
+      <button type="button" class="touch-btn cam-btn" data-cam="electro" title="Analytical Balance & Electro-Cell">
+        <i class="fa-solid fa-car-battery"></i>
+        <small>Electro</small>
+      </button>
+    </aside>
+
+    <!-- Right Precision Instrument Controls -->
+    <aside class="right-instrument-rig hud-interactive" aria-label="Laboratory Instrument Controls">
+      <button type="button" class="touch-btn rig-btn" id="btn-burette-micro" title="Dispense Micro-Drop (0.05 mL)">
+        <i class="fa-solid fa-droplet"></i>
+        <small>+0.05mL</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-burette-valve" title="Cycle Burette Stopcock: Closed / Dropwise / Stream">
+        <i class="fa-solid fa-faucet-drip"></i>
+        <small id="lbl-burette-valve">Closed</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-burner-toggle" title="Ignite / Extinguish Bunsen Burner">
+        <i class="fa-solid fa-fire-flame-simple"></i>
+        <small id="lbl-burner-state">Heat OFF</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-air-collar" title="Adjust Bunsen Air Collar (0% Luminous / 50% / 100% Roaring Blue)">
+        <i class="fa-solid fa-wind"></i>
+        <small id="lbl-air-collar">Air 100%</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-magnetic-stir" title="Cycle Magnetic Stirrer RPM (0 / 600 / 1200)">
+        <i class="fa-solid fa-arrows-spin"></i>
+        <small id="lbl-stir-rpm">Stir OFF</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-uv-lamp" title="Toggle UV Photochemical Lamp (hν)">
+        <i class="fa-solid fa-sun"></i>
+        <small id="lbl-uv-state">UV OFF</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn" id="btn-flame-test" title="Platinum Wire Atomic Emission Flame Test">
+        <i class="fa-solid fa-wand-sparkles"></i>
+        <small>Flame Test</small>
+      </button>
+      <button type="button" class="touch-btn rig-btn danger-outline" id="btn-clean-vessel" title="Empty & Rinse Selected Vessel">
+        <i class="fa-solid fa-broom"></i>
+        <small>Rinse</small>
+      </button>
+    </aside>
+
+    <!-- Floating AI Co-Scientist Action Button (Secured via Server Proxy) -->
+    <button type="button" class="ai-fab hud-interactive" id="btn-open-ai" title="Open AI Co-Scientist & On-Demand Reaction Synthesizer">
+      <i class="fa-solid fa-wand-magic-sparkles ai-fab-icon"></i>
+      <span class="ai-fab-badge">AI LAB</span>
+    </button>
+
+    <!-- Bottom Collapsible Workbench Shelf -->
+    <section class="bottom-workbench hud-interactive" id="bottom-workbench" aria-label="Laboratory Shelf and Reagent Dock">
+      <div class="workbench-top-strip">
+        <button type="button" class="sheet-toggle-btn" id="btn-toggle-workbench">
+          <span class="grab-pill"></span>
+          <i class="fa-solid fa-chevron-down" id="icon-sheet-state"></i>
+          <span class="sheet-toggle-lbl" id="lbl-sheet-state">Hide Shelf (85% 3D View)</span>
+        </button>
+
+        <div class="dispense-controls">
+          <div class="control-group" role="group" aria-label="Dispense Volume">
+            <span class="ctrl-tag"><i class="fa-solid fa-flask"></i> Vol:</span>
+            <button type="button" class="mini-chip" data-dose="0.5">0.5mL</button>
+            <button type="button" class="mini-chip" data-dose="5">5mL</button>
+            <button type="button" class="mini-chip active" data-dose="20">20mL</button>
+            <button type="button" class="mini-chip" data-dose="50">50mL</button>
+          </div>
+
+          <div class="control-group" role="group" aria-label="Reagent Molarity">
+            <span class="ctrl-tag"><i class="fa-solid fa-vial"></i> Conc:</span>
+            <button type="button" class="mini-chip" data-molarity="0.1">0.1M</button>
+            <button type="button" class="mini-chip active" data-molarity="1.0">1.0M</button>
+            <button type="button" class="mini-chip" data-molarity="5.0">5.0M</button>
+            <button type="button" class="mini-chip" data-molarity="12.0">Conc.</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="shelf-tabs-row">
+        <div class="shelf-tabs" role="tablist">
+          <button type="button" class="shelf-tab active" data-tab="apparatus" role="tab">
+            <i class="fa-solid fa-microscope"></i> 3D Instruments (1,250+)
+          </button>
+          <button type="button" class="shelf-tab" data-tab="acids_bases" role="tab">
+            <i class="fa-solid fa-flask"></i> Acids, Bases & Solvents
+          </button>
+          <button type="button" class="shelf-tab" data-tab="salts_redox" role="tab">
+            <i class="fa-solid fa-cubes-stacked"></i> Salts, Ions & Redox
+          </button>
+          <button type="button" class="shelf-tab" data-tab="organic_reagents" role="tab">
+            <i class="fa-solid fa-hexagon-nodes"></i> Organic & Named Reagents
+          </button>
+          <button type="button" class="shelf-tab" data-tab="indicators_catalysts" role="tab">
+            <i class="fa-solid fa-palette"></i> Indicators & Catalysts
+          </button>
+          <button type="button" class="shelf-tab" data-tab="metals_elements" role="tab">
+            <i class="fa-solid fa-layer-group"></i> Pure Elements (1–118)
+          </button>
+          <button type="button" class="shelf-tab" data-tab="guided_labs" role="tab">
+            <i class="fa-solid fa-bolt"></i> Class XI & XII Practicals
+          </button>
+        </div>
+
+        <div class="shelf-search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="shelf-search-input" placeholder="Search instruments, reagents, or formulas..." autocomplete="off">
+        </div>
+      </div>
+
+      <div class="shelf-grid" id="shelf-items-grid" role="region" aria-live="polite"></div>
+    </section>
+
+    <!-- =======================================================================
+         DRAWER 1: REACTION CONDITIONS & CATALYSTS CONTROLLER
+         ======================================================================= -->
+    <aside class="floating-drawer hidden" id="drawer-conditions" aria-label="Reaction Conditions Controller">
+      <div class="drawer-header">
+        <h3><i class="fa-solid fa-temperature-full"></i> Reaction Conditions & Catalysts</h3>
+        <button type="button" class="touch-btn close-drawer-btn" data-close="drawer-conditions"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="customizer-scroll">
+        <div class="cust-section">
+          <label class="cust-title"><i class="fa-solid fa-fire"></i> Thermal Bath & Medium Preset</label>
+          <div class="ctrl-pill-group">
+            <button type="button" class="mini-chip active" data-cond-mode="room">Room Temp (298 K)</button>
+            <button type="button" class="mini-chip" data-cond-mode="ice">Ice Bath (0–5 °C)</button>
+            <button type="button" class="mini-chip" data-cond-mode="warm">Water Bath (60 °C)</button>
+            <button type="button" class="mini-chip" data-cond-mode="reflux">Reflux Boil (100 °C)</button>
+            <button type="button" class="mini-chip" data-cond-mode="fusion">Dry Fusion (400 °C)</button>
+          </div>
+        </div>
+        <div class="cust-section">
+          <label class="cust-title" for="select-active-catalyst"><i class="fa-solid fa-flask-vial"></i> Active Catalyst / Promoter</label>
+          <select id="select-active-catalyst" class="studio-select">
+            <option value="none">None (Uncatalyzed)</option>
+            <option value="MnO2">MnO₂ (Manganese Dioxide)</option>
+            <option value="Pt_Pd_Ni">Pt / Pd / Raney Ni (Hydrogenation)</option>
+            <option value="Anhyd_AlCl3">Anhydrous AlCl₃ (Friedel–Crafts)</option>
+            <option value="Conc_H2SO4">Conc. H₂SO₄ (Dehydrating / Esterification)</option>
+            <option value="Zn_Hg_HCl">Zn–Hg / Conc. HCl (Clemmensen)</option>
+            <option value="N2H4_KOH">NH₂NH₂ / KOH / Glycol (Wolff–Kishner)</option>
+            <option value="Cu2Cl2_HCl">Cu₂Cl₂ / HCl (Sandmeyer)</option>
+            <option value="Fe_Mo">Fe + Mo (Haber Process)</option>
+            <option value="V2O5">V₂O₅ (Contact Process)</option>
+            <option value="UV_hv">UV Light Photons (hν Free Radical)</option>
+          </select>
+        </div>
+        <div class="cust-section">
+          <label class="cust-title" for="slider-electro-volt">
+            <i class="fa-solid fa-car-battery"></i> Electrolysis DC Voltage: <strong class="mono" id="val-electro-volt">0.0 V</strong>
+          </label>
+          <input type="range" id="slider-electro-volt" min="0" max="24" step="0.5" value="0">
+        </div>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         DRAWER 2: REAL-TIME ANALYTICS & SPECTROPHOTOMETER
+         ======================================================================= -->
+    <aside class="floating-drawer hidden" id="drawer-analytics" aria-label="Real-Time Analytical Graphs">
+      <div class="drawer-header">
+        <h3><i class="fa-solid fa-chart-area"></i> Live Telemetry & Spectrophotometer</h3>
+        <button type="button" class="touch-btn close-drawer-btn" data-close="drawer-analytics"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="chart-mode-tabs">
+        <button type="button" class="mini-chip active" data-chart="titration"><i class="fa-solid fa-droplet"></i> pH Titration</button>
+        <button type="button" class="mini-chip" data-chart="thermal"><i class="fa-solid fa-temperature-high"></i> Temp vs Time</button>
+        <button type="button" class="mini-chip" data-chart="uvvis"><i class="fa-solid fa-wave-square"></i> UV-Vis Spectrum</button>
+      </div>
+      <div class="chart-canvas-box">
+        <canvas id="analytics-canvas" width="360" height="175"></canvas>
+      </div>
+      <div class="analytics-summary-grid mono">
+        <div><span>Titrant Vol:</span> <strong id="an-titrant-vol">0.00 mL</strong></div>
+        <div><span>Equiv. Point:</span> <strong id="an-equiv-pt">-- mL</strong></div>
+        <div><span>Precipitate:</span> <strong id="an-ppt-mass">0.000 g</strong></div>
+        <div><span>Ionic Strength:</span> <strong id="an-ionic-i">0.000 M</strong></div>
+        <div><span>Evolved Gas:</span> <strong id="an-gas-type">None</strong></div>
+        <div><span>λ_max (Beer):</span> <strong id="an-lambda-max">-- nm</strong></div>
+      </div>
+      <div class="drawer-footer-actions">
+        <button type="button" class="touch-btn secondary-cta" id="btn-export-csv"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+        <button type="button" class="touch-btn secondary-cta" id="btn-clear-graph"><i class="fa-solid fa-rotate-left"></i> Clear Plot</button>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         DRAWER 3: LAB CUSTOMIZER & UNRESTRICTED REACTION BUILDER
+         ======================================================================= -->
+    <aside class="floating-drawer hidden" id="drawer-customizer" aria-label="Laboratory Customization Studio">
+      <div class="drawer-header">
+        <h3><i class="fa-solid fa-sliders"></i> Lab Customizer & Sandbox Studio</h3>
+        <button type="button" class="touch-btn close-drawer-btn" data-close="drawer-customizer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="customizer-scroll">
+        <div class="cust-section">
+          <label class="cust-title"><i class="fa-solid fa-mobile-screen"></i> Touch Button Size (`--touch-unit`)</label>
+          <div class="ctrl-pill-group">
+            <button type="button" class="mini-chip" data-uiscale="44px">Compact (44px)</button>
+            <button type="button" class="mini-chip active" data-uiscale="48px">Standard (48px)</button>
+            <button type="button" class="mini-chip" data-uiscale="56px">Large (56px)</button>
+            <button type="button" class="mini-chip" data-uiscale="64px">XL (64px)</button>
+          </div>
+        </div>
+        <div class="cust-section">
+          <label class="cust-title" for="slider-ambient-temp">
+            <i class="fa-solid fa-temperature-low"></i> Ambient Temperature: <strong class="mono" id="val-ambient-temp">25.0 °C (298.15 K)</strong>
+          </label>
+          <input type="range" id="slider-ambient-temp" min="-50" max="300" step="1" value="25">
+
+          <label class="cust-title" for="slider-pressure">
+            <i class="fa-solid fa-gauge"></i> Atmospheric Pressure: <strong class="mono" id="val-pressure">1.00 atm</strong>
+          </label>
+          <input type="range" id="slider-pressure" min="0.05" max="20" step="0.05" value="1.00">
+
+          <label class="cust-title" for="slider-gravity">
+            <i class="fa-solid fa-earth-asia"></i> Gravity Field: <strong class="mono" id="val-gravity">1.00 g (Earth)</strong>
+          </label>
+          <input type="range" id="slider-gravity" min="0" max="2.5" step="0.05" value="1.00">
+        </div>
+        <div class="cust-section">
+          <label class="cust-title"><i class="fa-solid fa-palette"></i> Visual Theme & AR Camera</label>
+          <div class="ctrl-pill-group">
+            <button type="button" class="mini-chip active" data-envtheme="Dark-Executive">Dark Executive</button>
+            <button type="button" class="mini-chip" data-envtheme="university">University</button>
+            <button type="button" class="mini-chip" data-envtheme="clean-white">White Studio</button>
+            <button type="button" class="mini-chip" data-envtheme="ar-camera"><i class="fa-solid fa-camera"></i> AR Mode</button>
+          </div>
+        </div>
+        <div class="cust-section">
+          <label class="cust-title"><i class="fa-solid fa-plus-circle"></i> Unrestricted Custom Reaction Builder</label>
+          <div class="custom-rxn-form">
+            <div class="rxn-inputs-row">
+              <input type="text" id="cust-rxn-a" placeholder="Reactant A (e.g. CuSO4)">
+              <span>+</span>
+              <input type="text" id="cust-rxn-b" placeholder="Reactant B (e.g. NaOH)">
+            </div>
+            <input type="text" id="cust-rxn-eq" placeholder="Balanced Equation / Product Name">
+            <div class="rxn-inputs-row">
+              <label>Color: <input type="color" id="cust-rxn-color" value="#10b981"></label>
+              <label>ΔH: <input type="number" id="cust-rxn-dh" value="-45" style="width:65px"></label>
+              <label><input type="checkbox" id="cust-rxn-ppt"> Ppt ↓</label>
+              <label><input type="checkbox" id="cust-rxn-gas"> Gas ↑</label>
+            </div>
+            <button type="button" class="touch-btn primary-cta full-width" id="btn-save-custom-rxn">
+              <i class="fa-solid fa-floppy-disk"></i> Register & Simulate Reaction
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         DRAWER 4: SECURE AI CO-SCIENTIST & ON-DEMAND REACTION GENERATOR
+         (Zero Client-Side Secret Exposure — Uses Encrypted Server Proxy)
+         ======================================================================= -->
+    <aside class="floating-drawer ai-drawer hidden" id="drawer-ai" aria-label="AI Co-Scientist Assistant">
+      <div class="drawer-header">
+        <div>
+          <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI Co-Scientist & Reaction Engine</h3>
+          <span class="telemetry-sync-badge"><i class="fa-solid fa-shield-halved"></i> Encrypted Server Endpoint • Live 3D Telemetry</span>
+        </div>
+        <div class="ai-header-controls">
+          <button type="button" class="touch-btn icon-only" id="btn-ai-tts" title="Toggle Voice Readout">
+            <i class="fa-solid fa-volume-up"></i>
+          </button>
+          <button type="button" class="touch-btn close-drawer-btn" data-close="drawer-ai" aria-label="Close AI Drawer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- On-Demand Reaction Synthesis Input -->
+      <div class="ai-reaction-builder-bar">
+        <input
+          type="text"
+          id="ai-ondemand-rxn-input"
+          placeholder="Synthesize any reaction on demand (e.g. 'Phenol + Br2 water' or 'Na + H2O')..."
+        >
+        <button type="button" class="touch-btn primary-cta" id="btn-ai-synthesize-rxn" title="Synthesize & Simulate">
+          <i class="fa-solid fa-flask"></i> Make
+        </button>
+      </div>
+
+      <div class="ai-chat-stream" id="ai-chat-stream" aria-live="polite">
+        <div class="ai-msg assistant">
+          <strong><i class="fa-solid fa-robot"></i> Co-Scientist:</strong> Connected to live 3D multi-vessel telemetry. Ask me to synthesize <strong>any chemical reaction on demand</strong> (unrestricted sandbox with GHS safety advisories), balance equations, or analyze the vessel currently over the Bunsen flame.
+        </div>
+      </div>
+
+      <div class="ai-quick-prompts">
+        <button type="button" class="mini-chip ai-prompt-chip" data-prompt="Synthesize and simulate the Sandmeyer Reaction (Benzene diazonium chloride + Cu2Cl2/HCl).">
+          <i class="fa-solid fa-flask"></i> Sandmeyer Reaction
+        </button>
+        <button type="button" class="mini-chip ai-prompt-chip" data-prompt="Synthesize and simulate Tollens' Silver Mirror Test with Acetaldehyde.">
+          <i class="fa-solid fa-wand-sparkles"></i> Silver Mirror Test
+        </button>
+        <button type="button" class="mini-chip ai-prompt-chip" data-prompt="Analyze the temperature, pH, and chemical contents of the vessel currently over the flame.">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> Inspect Heated Vessel
+        </button>
+      </div>
+
+      <form class="ai-input-row" id="ai-chat-form">
+        <button type="button" class="touch-btn icon-only" id="btn-ai-mic" title="Voice Input">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <input type="text" id="ai-chat-input" placeholder="Command the AI Co-Scientist or ask a chemistry question..." autocomplete="off">
+        <button type="submit" class="touch-btn primary-cta icon-only" title="Send">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </aside>
+
+    <!-- =======================================================================
+         GHS LABORATORY HAZARD & UNRESTRICTED REACTION WARNING MODAL
+         ======================================================================= -->
+    <div class="hazard-modal-backdrop hidden" id="hazard-warning-modal" role="alertdialog" aria-modal="true" aria-labelledby="hazard-title">
+      <div class="hazard-modal-card">
+        <div class="hazard-header">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div>
+            <h3 id="hazard-title">GHS LABORATORY HAZARD ADVISORY</h3>
+            <span class="mono" style="font-size:0.7rem;color:#fda4af" id="hazard-code">UNRESTRICTED SANDBOX • HIGH-ENERGY / TOXIC EVENT</span>
+          </div>
+        </div>
+        <div class="hazard-body" id="hazard-body-text">
+          <p>You are initiating a vigorous exothermic or toxic-gas reaction. In a physical laboratory, this requires a certified Fume Hood, blast shield, and PPE.</p>
+          <p><strong>Sandbox Policy:</strong> ChemVerse 3D permits all chemical combinations without restriction so you can study the complete thermodynamic outcome safely.</p>
+        </div>
+        <div class="hazard-actions">
+          <button type="button" class="touch-btn secondary-cta" id="btn-hazard-neutralize">
+            <i class="fa-solid fa-droplet-slash"></i> Rinse & Neutralize
+          </button>
+          <button type="button" class="touch-btn primary-cta" id="btn-hazard-acknowledge">
+            <i class="fa-solid fa-check"></i> Acknowledge & Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Core Data & 3D Spatial Physics Engine -->
+  <script src="core-data.js"></script>
+  <script src="lab-engine.js"></script>
+</body>
+</html>

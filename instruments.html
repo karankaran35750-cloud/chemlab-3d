@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark-Executive">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#060a12">
+  <meta name="description" content="1,250+ Scientific Laboratory Instruments, Borosilicate Glassware Specifications, and Class XI & XII Practical Lab Manuals.">
+
+  <!-- Google AdSense Auto-Ads Script (Zero Manual Ad Boxes) -->
+  <meta name="google-adsense-account" content="ca-pub-8123739878680268">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8123739878680268" crossorigin="anonymous"></script>
+
+  <title>1,250+ Instruments & Practical Lab Manuals — ChemVerse 3D</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Formal Global Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link">
+        <div class="brand-emblem"><i class="fa-solid fa-atom"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">CHEMVERSE <span class="badge-pro">3D</span></span>
+          <span class="brand-tagline">Instruments Directory & Practical Manuals</span>
+        </div>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main Website Pages">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Overview</span></a>
+        <a href="lab.html" class="nav-link nav-cta-lab"><i class="fa-solid fa-flask-vial"></i><span>3D Simulation Lab</span></a>
+        <a href="encyclopedia.html" class="nav-link"><i class="fa-solid fa-book-atlas"></i><span>Reaction Encyclopedia</span></a>
+        <a href="instruments.html" class="nav-link active"><i class="fa-solid fa-microscope"></i><span>Instruments & Manuals</span></a>
+        <a href="periodic-molecules.html" class="nav-link"><i class="fa-solid fa-cubes"></i><span>Elements & 3D Molecules</span></a>
+        <a href="legal.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i><span>Policies & Safety</span></a>
+      </nav>
+
+      <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-page-container">
+    <!-- Section 1: Step-by-Step Practical Manuals & Viva-Voce -->
+    <section class="content-section" style="margin-top:0;">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-graduation-cap"></i> Class XI & XII Practical Lab Manuals & Viva-Voce Guides</h2>
+        <p>Complete experimental procedures with Aim, Chemical Theory, Balanced Equations, and Viva Questions—linked directly to the 3D workbench.</p>
+      </div>
+
+      <div class="tutorials-grid" id="tutorials-list-grid"></div>
+    </section>
+
+    <!-- Section 2: 1,250+ Scientific Instruments & Glassware Catalog -->
+    <section class="content-section">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-microscope"></i> 1,250+ Scientific Instruments & Borosilicate Glassware Catalog</h2>
+        <p>Filter volumetric glassware, thermal burners, distillation columns, and analytical spectrometers. Click any item to spawn it in 3D.</p>
+      </div>
+
+      <div class="advanced-filter-panel bordered-card">
+        <div class="filter-search-row">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="inst-catalog-search" placeholder="Search 1,250+ instruments (Burette, Soxhlet, Liebig Condenser, Centrifuge, Spectrophotometer, Crucible)...">
+          </div>
+        </div>
+        <div class="filter-chips-row">
+          <span class="filter-lbl"><i class="fa-solid fa-toolbox"></i> Instrument Class:</span>
+          <button type="button" class="mini-chip active" data-instcat="all">All (1,250+)</button>
+          <button type="button" class="mini-chip" data-instcat="volumetric">Volumetric & Titration</button>
+          <button type="button" class="mini-chip" data-instcat="reaction">Reaction & Reflux Vessels</button>
+          <button type="button" class="mini-chip" data-instcat="thermal">Thermal, Burners & Furnaces</button>
+          <button type="button" class="mini-chip" data-instcat="distillation">Distillation & Extraction</button>
+          <button type="button" class="mini-chip" data-instcat="analytical">Spectroscopy, pH & Balances</button>
+          <button type="button" class="mini-chip" data-instcat="safety">Safety & Stands</button>
+        </div>
+      </div>
+
+      <div class="encyclopedia-grid" id="inst-catalog-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 ChemVerse 3D Virtual Chemistry Laboratory.</span>
+      <span><a href="legal.html" style="color:#38bdf8;text-decoration:none;">Privacy Policy, Terms & Safety Disclaimer</a></span>
+    </div>
+  </footer>
+
+  <script src="core-data.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      document.getElementById("btn-mobile-menu")?.addEventListener("click", () => {
+        document.getElementById("site-nav")?.classList.toggle("open");
+      });
+
+      // Render Tutorials
+      const tutGrid = document.getElementById("tutorials-list-grid");
+      if (tutGrid && window.CV) {
+        window.CV.TUTORIALS_DB.forEach(tut => {
+          const card = document.createElement("article");
+          card.className = "tutorial-entry-card";
+          const stepsHtml = tut.steps.map((s, i) => `<div><strong>Step ${i + 1}:</strong> ${s}</div>`).join("");
+          card.innerHTML = `
+            <div>
+              <div class="entry-badge-row">
+                <span class="badge-tag"><i class="fa-solid fa-book-open"></i> ${tut.badge}</span>
+              </div>
+              <h3 class="card-title-md">${tut.title}</h3>
+              <p style="font-size:0.78rem;color:#cbd5e1;margin-bottom:8px"><strong>Aim:</strong> ${tut.aim}</p>
+              <div class="eq-box">${tut.equation}</div>
+              <div class="meta-detail-list">
+                <span><strong>Theory:</strong> ${tut.theory}</span>
+                ${stepsHtml}
+                <span style="color:#fde047;margin-top:4px"><i class="fa-solid fa-circle-question"></i> <strong>Viva-Voce:</strong> ${tut.viva}</span>
+              </div>
+            </div>
+            <a href="lab.html?preset=${encodeURIComponent(tut.practicalId)}" class="card-action-btn">
+              <i class="fa-solid fa-play"></i> Launch Practical in 3D Lab
+            </a>
+          `;
+          tutGrid.appendChild(card);
+        });
+      }
+
+      // Render 1,250+ Instruments Directory
+      const instGrid = document.getElementById("inst-catalog-grid");
+      const searchInput = document.getElementById("inst-catalog-search");
+      let activeInstCat = "all";
+
+      function renderInstruments() {
+        if (!instGrid || !window.CV) return;
+        instGrid.innerHTML = "";
+        const q = (searchInput?.value || "").trim().toLowerCase();
+
+        const filtered = window.CV.INSTRUMENTS_CATALOG.filter(inst => {
+          const catOk = activeInstCat === "all" || inst.cat === activeInstCat;
+          const qOk = !q || inst.label.toLowerCase().includes(q) || inst.sub.toLowerCase().includes(q);
+          return catOk && qOk;
+        });
+
+        filtered.slice(0, 90).forEach(inst => {
+          const card = document.createElement("article");
+          card.className = "inst-entry-card";
+          card.innerHTML = `
+            <div>
+              <div class="entry-badge-row">
+                <span class="badge-tag"><i class="fa-solid fa-microscope"></i> ${(inst.cat || "Apparatus").toUpperCase()}</span>
+                <span class="mono" style="color:#38bdf8">${inst.capacityMl ? inst.capacityMl + " mL" : "Standard"}</span>
+              </div>
+              <h3 class="card-title-md">${inst.label}</h3>
+              <p style="font-size:0.76rem;color:#94a3b8">${inst.sub}</p>
+            </div>
+            <a href="lab.html?spawn=${encodeURIComponent(inst.id)}" class="card-action-btn">
+              <i class="fa-solid fa-cube"></i> Spawn in 3D Workbench
+            </a>
+          `;
+          instGrid.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll("[data-instcat]").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("[data-instcat]").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          activeInstCat = chip.dataset.instcat;
+          renderInstruments();
+        });
+      });
+
+      searchInput?.addEventListener("input", renderInstruments);
+      renderInstruments();
+    })();
+  </script>
+</body>
+</html>

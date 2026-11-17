@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark-Executive">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#060a12">
+  <meta name="description" content="Class XI & XII NCERT Reaction Encyclopedia — Named Organic Reactions, Qualitative Salt Analysis, Redox Titrations, and Custom Reaction Builder.">
+
+  <!-- Google AdSense Auto-Ads Script (Zero Manual Ad Boxes) -->
+  <meta name="google-adsense-account" content="ca-pub-8123739878680268">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8123739878680268" crossorigin="anonymous"></script>
+
+  <title>Class XI & XII Reaction Encyclopedia — ChemVerse 3D</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Formal Global Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link">
+        <div class="brand-emblem"><i class="fa-solid fa-atom"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">CHEMVERSE <span class="badge-pro">3D</span></span>
+          <span class="brand-tagline">Class XI & XII Reaction Encyclopedia</span>
+        </div>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main Website Pages">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Overview</span></a>
+        <a href="lab.html" class="nav-link nav-cta-lab"><i class="fa-solid fa-flask-vial"></i><span>3D Simulation Lab</span></a>
+        <a href="encyclopedia.html" class="nav-link active"><i class="fa-solid fa-book-atlas"></i><span>Reaction Encyclopedia</span></a>
+        <a href="instruments.html" class="nav-link"><i class="fa-solid fa-microscope"></i><span>Instruments & Manuals</span></a>
+        <a href="periodic-molecules.html" class="nav-link"><i class="fa-solid fa-cubes"></i><span>Elements & 3D Molecules</span></a>
+        <a href="legal.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i><span>Policies & Safety</span></a>
+      </nav>
+
+      <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-page-container">
+    <div class="section-heading">
+      <h2><i class="fa-solid fa-book-atlas"></i> Master Reaction Encyclopedia (Class XI, Class XII & University)</h2>
+      <p>Search over 2,500 organic, inorganic, coordination, and redox reactions with full conditions, catalysts, and enthalpy values—or design your own unrestricted reaction below.</p>
+    </div>
+
+    <!-- Advanced Search & Syllabus Filter Bar -->
+    <section class="advanced-filter-panel bordered-card">
+      <div class="filter-search-row">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="search"
+            id="rxn-encyclopedia-search"
+            placeholder="Search reaction name (Aldol, Sandmeyer, Cannizzaro, Wurtz), reactants (Phenol, KMnO4), or catalyst..."
+          >
+        </div>
+        <a href="lab.html" class="touch-btn primary-cta">
+          <i class="fa-solid fa-vr-cardboard"></i> Open 3D Sandbox
+        </a>
+      </div>
+
+      <div class="filter-chips-row">
+        <span class="filter-lbl"><i class="fa-solid fa-filter"></i> Filter Category:</span>
+        <button type="button" class="mini-chip active" data-rxncat="all">All Reactions</button>
+        <button type="button" class="mini-chip" data-rxncat="class11">Class XI NCERT</button>
+        <button type="button" class="mini-chip" data-rxncat="class12">Class XII NCERT</button>
+        <button type="button" class="mini-chip" data-rxncat="organic_named">Named Organic Reactions</button>
+        <button type="button" class="mini-chip" data-rxncat="inorganic_salt">Qualitative Salt Analysis</button>
+        <button type="button" class="mini-chip" data-rxncat="redox_electro">Redox & Electrochemistry</button>
+        <button type="button" class="mini-chip" data-rxncat="coordination">Coordination Complexes</button>
+      </div>
+    </section>
+
+    <!-- Custom Unrestricted Reaction Launcher -->
+    <section class="bordered-card" style="margin-bottom:24px;">
+      <h3 style="font-size:0.98rem;color:#38bdf8;margin-bottom:10px;">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Custom Unrestricted Reaction Launcher
+      </h3>
+      <form id="page-custom-rxn-form" class="filter-search-row">
+        <input type="text" id="enc-reactant-a" class="studio-select" placeholder="Reactant A (e.g. Phenol, CuSO4, Na_metal)" required>
+        <input type="text" id="enc-reactant-b" class="studio-select" placeholder="Reactant B (e.g. Br2_water, NaOH, H2O)" required>
+        <input type="text" id="enc-conditions" class="studio-select" placeholder="Conditions (e.g. 340 K, Conc. H2SO4, UV Light)">
+        <button type="submit" class="touch-btn primary-cta">
+          <i class="fa-solid fa-play"></i> Simulate Custom Reaction in 3D
+        </button>
+      </form>
+    </section>
+
+    <!-- Dynamic Encyclopedia Cards Grid -->
+    <section class="encyclopedia-grid" id="rxn-encyclopedia-grid" aria-live="polite"></section>
+  </main>
+
+  <!-- Formal Footer -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 ChemVerse 3D Virtual Chemistry Laboratory.</span>
+      <span><a href="legal.html" style="color:#38bdf8;text-decoration:none;">Privacy Policy, Terms & Safety Disclaimer</a></span>
+    </div>
+  </footer>
+
+  <script src="core-data.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      document.getElementById("btn-mobile-menu")?.addEventListener("click", () => {
+        document.getElementById("site-nav")?.classList.toggle("open");
+      });
+
+      const grid = document.getElementById("rxn-encyclopedia-grid");
+      const searchInput = document.getElementById("rxn-encyclopedia-search");
+      const params = new URLSearchParams(window.location.search);
+      let activeCat = params.get("cat") || "all";
+      if (params.get("q") && searchInput) searchInput.value = params.get("q");
+
+      function renderGrid() {
+        if (!grid || !window.CV) return;
+        grid.innerHTML = "";
+        const q = (searchInput?.value || "").trim().toLowerCase();
+
+        const matches = window.CV.REACTIONS_ENCYCLOPEDIA.filter(rxn => {
+          const catOk = activeCat === "all" || rxn.cat === activeCat || rxn.syllabus === activeCat;
+          const textOk = !q || rxn.name.toLowerCase().includes(q) || rxn.equation.toLowerCase().includes(q) || (rxn.conditions || "").toLowerCase().includes(q);
+          return catOk && textOk;
+        });
+
+        matches.slice(0, 90).forEach(rxn => {
+          const card = document.createElement("article");
+          card.className = "rxn-entry-card";
+          const rList = Object.keys(rxn.reactants || {}).join(" + ");
+          card.innerHTML = `
+            <div>
+              <div class="entry-badge-row">
+                <span class="badge-tag"><i class="fa-solid fa-flask"></i> ${(rxn.syllabus || rxn.cat).toUpperCase()}</span>
+                <span class="mono" style="color:#34d399">ΔH° = ${rxn.deltaH_kJ_mol} kJ/mol</span>
+              </div>
+              <h3 class="card-title-md">${rxn.name}</h3>
+              <div class="eq-box">${rxn.equation}</div>
+              <div class="meta-detail-list">
+                <span><strong>Reactants:</strong> ${rList}</span>
+                <span><strong>Conditions:</strong> ${rxn.conditions || "298 K, 1 atm"}</span>
+              </div>
+            </div>
+            <a href="lab.html?rxn=${encodeURIComponent(rxn.id)}" class="card-action-btn">
+              <i class="fa-solid fa-play"></i> Simulate Reaction in 3D
+            </a>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll("[data-rxncat]").forEach(chip => {
+        if (chip.dataset.rxncat === activeCat) chip.classList.add("active");
+        else if (activeCat !== "all") chip.classList.remove("active");
+
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("[data-rxncat]").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          activeCat = chip.dataset.rxncat;
+          renderGrid();
+        });
+      });
+
+      searchInput?.addEventListener("input", renderGrid);
+
+      document.getElementById("page-custom-rxn-form")?.addEventListener("submit", e => {
+        e.preventDefault();
+        const a = encodeURIComponent(document.getElementById("enc-reactant-a").value.trim());
+        const b = encodeURIComponent(document.getElementById("enc-reactant-b").value.trim());
+        const cond = encodeURIComponent(document.getElementById("enc-conditions").value.trim());
+        window.location.href = `lab.html?customA=${a}&customB=${b}&cond=${cond}`;
+      });
+
+      renderGrid();
+    })();
+  </script>
+</body>
+</html>

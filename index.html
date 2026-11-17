@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark-Executive">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#060a12">
+  <meta name="description" content="ChemVerse 3D — National Virtual Chemistry Laboratory, Multi-Vessel 3D Spatial Physics Engine, Class XI & XII NCERT Reaction Encyclopedia, and AI Co-Scientist.">
+
+  <!-- Google AdSense Auto-Ads Verification & Script (Google Automatically Places Ads; Zero Manual Boxes) -->
+  <meta name="google-adsense-account" content="ca-pub-8123739878680268">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8123739878680268" crossorigin="anonymous"></script>
+
+  <title>ChemVerse 3D — Virtual Chemistry Laboratory & Computational Reaction Platform</title>
+
+  <!-- Typography: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vector Icons: Font Awesome 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. LIVE REMOTE-CONTROLLED NOTIFICATION BAR
+       Controlled remotely via GitHub Gist / JSON endpoint without redeploying!
+       ========================================================================= -->
+  <div class="live-notification-bar" id="live-notification-bar" role="region" aria-label="Live Platform Announcement">
+    <div class="notification-inner">
+      <span class="live-pulse-badge" id="notif-badge">
+        <span class="pulse-dot"></span>
+        <span id="notif-type">LIVE UPDATE</span>
+      </span>
+      <p class="notification-message" id="notif-message">
+        Welcome to ChemVerse 3D v5.0 — Spatial Multi-Vessel Heating Physics, Unrestricted Reaction Sandbox, and Class XI & XII Practicals are now live.
+      </p>
+      <a href="lab.html" class="notification-cta" id="notif-link">
+        <span>Enter 3D Lab</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <button type="button" class="notification-close" id="btn-close-notif" aria-label="Dismiss Notification">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. FORMAL GLOBAL HEADER & MULTI-PAGE NAVIGATION
+       ========================================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link" aria-label="ChemVerse 3D Home">
+        <div class="brand-emblem">
+          <i class="fa-solid fa-atom"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">CHEMVERSE <span class="badge-pro">3D</span></span>
+          <span class="brand-tagline">Computational Chemistry & Virtual Laboratory</span>
+        </div>
+      </a>
+
+      <!-- Global Cross-Page Search Bar -->
+      <form class="global-search-box" id="home-search-form" action="encyclopedia.html" method="get" role="search">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input
+          type="search"
+          name="q"
+          id="global-search-input"
+          placeholder="Search reactions (Aldol, Sandmeyer), instruments, or elements..."
+          autocomplete="off"
+        >
+        <button type="submit" class="search-filter-btn" title="Search Encyclopedia">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <!-- Multi-File Page Navigation -->
+      <nav class="site-nav" id="site-nav" aria-label="Main Website Pages">
+        <a href="index.html" class="nav-link active">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Overview</span>
+        </a>
+        <a href="lab.html" class="nav-link nav-cta-lab">
+          <i class="fa-solid fa-flask-vial"></i>
+          <span>3D Simulation Lab</span>
+        </a>
+        <a href="encyclopedia.html" class="nav-link">
+          <i class="fa-solid fa-book-atlas"></i>
+          <span>Reaction Encyclopedia</span>
+        </a>
+        <a href="instruments.html" class="nav-link">
+          <i class="fa-solid fa-microscope"></i>
+          <span>Instruments & Manuals</span>
+        </a>
+        <a href="periodic-molecules.html" class="nav-link">
+          <i class="fa-solid fa-cubes"></i>
+          <span>Elements & 3D Molecules</span>
+        </a>
+        <a href="legal.html" class="nav-link">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <span>Policies & Safety</span>
+        </a>
+      </nav>
+
+      <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Open Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       3. EXECUTIVE HERO SECTION & ARCHITECTURAL OVERVIEW
+       ========================================================================= -->
+  <main class="main-page-container">
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>WebGL2 Spatial Physics • Unrestricted Stoichiometry • CBSE/NCERT Class XI & XII</span>
+        </div>
+        <h1 class="hero-title">
+          Precision <span class="gradient-text">3D Virtual Chemistry Workbench</span> & Reaction Simulation Engine
+        </h1>
+        <p class="hero-description">
+          Conduct authentic qualitative and quantitative chemical experiments in a distraction-free 3D workspace. Move any vessel onto or off the Bunsen burner flame with real-time spatial heat transfer, combine any reagents without artificial restrictions under an automated GHS safety warning system, and explore thousands of Class XI, Class XII, and university-level reactions.
+        </p>
+
+        <div class="hero-actions">
+          <a href="lab.html" class="btn-hero-primary">
+            <i class="fa-solid fa-vr-cardboard"></i> Launch 3D Simulation Lab (Ad-Free)
+          </a>
+          <a href="encyclopedia.html" class="btn-hero-secondary">
+            <i class="fa-solid fa-book-open-reader"></i> Open Reaction Encyclopedia
+          </a>
+          <a href="instruments.html" class="btn-hero-secondary">
+            <i class="fa-solid fa-graduation-cap"></i> Practical Lab Manuals
+          </a>
+        </div>
+
+        <div class="hero-stats-grid">
+          <div class="stat-box">
+            <i class="fa-solid fa-fire-burner"></i>
+            <strong>Spatial 3D</strong>
+            <span>Multi-Vessel Flame & Heat Transfer</span>
+          </div>
+          <div class="stat-box">
+            <i class="fa-solid fa-vials"></i>
+            <strong>1,250+</strong>
+            <span>Calibrated 3D Lab Instruments</span>
+          </div>
+          <div class="stat-box">
+            <i class="fa-solid fa-atom"></i>
+            <strong>2,500+</strong>
+            <span>Class XI, XII & Research Reactions</span>
+          </div>
+          <div class="stat-box">
+            <i class="fa-solid fa-lock"></i>
+            <strong>Zero-Trust</strong>
+            <span>Protected Server-Side AI Architecture</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive System Telemetry & Spatial Physics Preview Card -->
+      <div class="hero-visual-card">
+        <div class="preview-header">
+          <span class="dot-red"></span><span class="dot-amber"></span><span class="dot-green"></span>
+          <span class="mono">spatial_thermodynamics_v5.webgl2</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-feature-item">
+            <i class="fa-solid fa-hand-pointer icon-cyan"></i>
+            <div>
+              <strong>True Spatial Heating & Vessel Swapping</strong>
+              <p>Drag a beaker off the tripod stand and place a secondary pot, crucible, or flask onto the burner—the engine automatically transfers thermal wattage to whichever vessel is positioned over the flame.</p>
+            </div>
+          </div>
+          <div class="preview-feature-item">
+            <i class="fa-solid fa-triangle-exclamation icon-amber"></i>
+            <div>
+              <strong>Unrestricted Sandbox with GHS Hazard Pop-Ups</strong>
+              <p>Mix any chemicals in any molarity or temperature. Violent exothermic, toxic-gas, or over-capacity reactions trigger a formal Laboratory Hazard Advisory while letting you observe the outcome.</p>
+            </div>
+          </div>
+          <div class="preview-feature-item">
+            <i class="fa-solid fa-server icon-emerald"></i>
+            <div>
+              <strong>Encrypted Proxy & On-Demand Synthesis</strong>
+              <p>All credentials remain strictly on the server backend. Request any custom organic or inorganic reaction and watch the stoichiometry engine balance and render it in 3D.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         4. CORE PLATFORM ARCHITECTURE & DEDICATED MODULES
+         ======================================================================= -->
+    <section class="content-section">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-sitemap"></i> Dedicated Laboratory & Academic Modules</h2>
+        <p>Every module is engineered as a standalone, high-speed environment tailored for students, educators, and researchers.</p>
+      </div>
+
+      <div class="feature-cards-grid">
+        <!-- Module 1: 3D Lab -->
+        <article class="info-card bordered-card">
+          <div class="card-icon-wrap cyan"><i class="fa-solid fa-flask"></i></div>
+          <h3>1. 3D Virtual Chemistry Workbench</h3>
+          <p>A 100% ad-free WebGL2 simulation environment featuring multiple movable vessels, a 50 mL graduated burette, rotatable air-collar Bunsen burner, magnetic stirrer, and UV photochemical lamp.</p>
+          <ul class="card-list">
+            <li><i class="fa-solid fa-check"></i> Real-time proximity detection between flame and vessels</li>
+            <li><i class="fa-solid fa-check"></i> Pouring between vessels, cloning & custom molarities</li>
+            <li><i class="fa-solid fa-check"></i> Live pH titration curves, conductivity & UV-Vis spectra</li>
+          </ul>
+          <a href="lab.html" class="card-action-btn">
+            <span>Enter 3D Simulation Lab</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Module 2: Encyclopedia -->
+        <article class="info-card bordered-card">
+          <div class="card-icon-wrap emerald"><i class="fa-solid fa-book-journal-whills"></i></div>
+          <h3>2. Class XI & XII Reaction Encyclopedia</h3>
+          <p>Comprehensive repository covering CBSE, ISC, JEE, and NEET syllabi—complete with balanced equations, catalysts, temperature/pressure conditions, and enthalpy ($\Delta H^\circ$) values.</p>
+          <ul class="card-list">
+            <li><i class="fa-solid fa-check"></i> Named Organic: Aldol, Sandmeyer, Cannizzaro, Wurtz</li>
+            <li><i class="fa-solid fa-check"></i> Qualitative Analysis: Group 0–VI Cations & Anions</li>
+            <li><i class="fa-solid fa-check"></i> 1-Click launch directly into the 3D reaction vessel</li>
+          </ul>
+          <a href="encyclopedia.html" class="card-action-btn">
+            <span>Explore Reaction Encyclopedia</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Module 3: Instruments & Manuals -->
+        <article class="info-card bordered-card">
+          <div class="card-icon-wrap amber"><i class="fa-solid fa-microscope"></i></div>
+          <h3>3. 1,250+ Instruments & Practical Manuals</h3>
+          <p>Detailed technical specifications for borosilicate glassware, distillation assemblies, analytical balances, and spectrophotometers alongside step-by-step board practical procedures.</p>
+          <ul class="card-list">
+            <li><i class="fa-solid fa-check"></i> Volumetric, Reflux, Soxhlet & Separatory Apparatus</li>
+            <li><i class="fa-solid fa-check"></i> Aim, Theory, Procedure & Viva-Voce Question Bank</li>
+            <li><i class="fa-solid fa-check"></i> Spawn any selected apparatus directly onto the 3D bench</li>
+          </ul>
+          <a href="instruments.html" class="card-action-btn">
+            <span>Browse Instruments & Manuals</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Module 4: Periodic Table & 3D Molecules -->
+        <article class="info-card bordered-card">
+          <div class="card-icon-wrap violet"><i class="fa-solid fa-dna"></i></div>
+          <h3>4. 118 Elements & 3D Molecular Studio</h3>
+          <p>Interactive IUPAC Periodic Table with 3D Bohr shells and quantum orbital probability clouds ($s, p, d, f$), paired with a live PubChem 3D conformer viewer and VSEPR bond-angle calculator.</p>
+          <ul class="card-list">
+            <li><i class="fa-solid fa-check"></i> All 118 elements with oxidation states, $E^\circ$, and CPK colors</li>
+            <li><i class="fa-solid fa-check"></i> Live PubChem 3D SDF structure & 2D SMILES rendering</li>
+            <li><i class="fa-solid fa-check"></i> Measure interatomic bond lengths ($\text{Å}$) and bond angles ($\theta^\circ$)</li>
+          </ul>
+          <a href="periodic-molecules.html" class="card-action-btn">
+            <span>Open Elements & 3D Molecules</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         5. DIRECT LAUNCH MATRIX: SIGNATURE CLASS XI & XII EXPERIMENTS
+         ======================================================================= -->
+    <section class="content-section">
+      <div class="section-heading">
+        <h2><i class="fa-solid fa-bolt"></i> Instant 3D Experiment Launchpad</h2>
+        <p>Select any standard practical below to open the 3D Virtual Lab pre-loaded with the required vessels, reagents, and thermal conditions.</p>
+      </div>
+
+      <div class="encyclopedia-grid">
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-eye-dropper"></i> CLASS XII VOLUMETRIC</span>
+              <span class="mono" style="color:#f59e0b">ΔH° = -195.0 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">KMnO₄ vs Oxalic Acid Redox Titration</h3>
+            <div class="eq-box">2 KMnO₄ + 5 H₂C₂O₄ + 3 H₂SO₄ → K₂SO₄ + 2 MnSO₄ + 10 CO₂↑ + 8 H₂O</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> Warm to 60–70 °C over Bunsen Burner; Dilute H₂SO₄ medium</span>
+              <span><strong>Observation:</strong> Self-indicating purple MnO₄⁻ decolorizes with brisk CO₂ effervescence</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=permanganate_redox" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-vial"></i> CLASS XII ORGANIC</span>
+              <span class="mono" style="color:#34d399">ΔH° = -52.0 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">Tollens' Silver Mirror Test for Aldehydes</h3>
+            <div class="eq-box">CH₃CHO + 2 [Ag(NH₃)₂]⁺ + 3 OH⁻ → CH₃COO⁻ + 2 Ag(s)↓ + 4 NH₃ + 2 H₂O</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> Warm Water Bath (60 °C); Ammoniacal Silver Nitrate</span>
+              <span><strong>Observation:</strong> Deposition of a reflective metallic silver mirror on the glass wall</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=silver_mirror_test" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-Snowflake"></i> CLASS XII AMINES</span>
+              <span class="mono" style="color:#38bdf8">ΔH° = -64.0 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">Azo Dye Coupling Reaction (Ice Bath 0–5 °C)</h3>
+            <div class="eq-box">C₆H₅N₂⁺Cl⁻ + C₆H₅OH —[NaOH, 273–278 K]→ p-HO-C₆H₄-N=N-C₆H₅(s)↓</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> Ice Bath (0–5 °C), Alkaline Phenoxide Medium</span>
+              <span><strong>Observation:</strong> Immediate precipitation of brilliant orange para-hydroxyazobenzene dye</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=azo_dye_practical" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-filter"></i> CLASS XI & XII SALT</span>
+              <span class="mono" style="color:#fde047">ΔH° = -48.2 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">Golden Rain Recrystallization (PbI₂)</h3>
+            <div class="eq-box">Pb(NO₃)₂(aq) + 2 KI(aq) → PbI₂(s)↓ + 2 KNO₃(aq)</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> Dissolves on heating over burner; crystallizes on cooling</span>
+              <span><strong>Observation:</strong> Shimmering canary-yellow hexagonal platelets settle at the bottom</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=golden_rain" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-chart-line"></i> CLASS XI EQUILIBRIUM</span>
+              <span class="mono" style="color:#f43f5e">ΔH° = -57.3 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">pH-Metric Strong Acid–Base Titration</h3>
+            <div class="eq-box">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> 298 K, Phenolphthalein Indicator, 600 RPM Magnetic Stirrer</span>
+              <span><strong>Observation:</strong> Sharp sigmoidal pH jump at equivalence point (pH 7.00 → Magenta Pink)</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=acid_base_titration" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+
+        <article class="rxn-entry-card">
+          <div>
+            <div class="entry-badge-row">
+              <span class="badge-tag"><i class="fa-solid fa-triangle-exclamation"></i> HIGH-ENERGY REDOX</span>
+              <span class="mono" style="color:#fb7185">ΔH° = -368.6 kJ/mol</span>
+            </div>
+            <h3 class="card-title-md">Alkali Metal Exothermic Reaction & Safety Demo</h3>
+            <div class="eq-box">2 Na(s) + 2 H₂O(l) → 2 NaOH(aq) + H₂(g)↑ + Thermal Energy</div>
+            <div class="meta-detail-list">
+              <span><strong>Conditions:</strong> Unrestricted Sandbox Mode with GHS Hazard Advisory Pop-up</span>
+              <span><strong>Observation:</strong> Rapid hydrogen evolution, strong alkaline shift, and exothermic spike</span>
+            </div>
+          </div>
+          <a href="lab.html?preset=alkali_hazard_demo" class="card-action-btn">
+            <i class="fa-solid fa-play"></i> Launch in 3D Workbench
+          </a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       6. FORMAL GLOBAL FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="brand-link">
+          <div class="brand-emblem"><i class="fa-solid fa-atom"></i></div>
+          <span class="brand-name">CHEMVERSE 3D</span>
+        </a>
+        <p class="footer-desc">
+          Formal 3D Virtual Chemistry Laboratory, Spatial Thermodynamics Engine, Class XI & XII Reaction Encyclopedia, and Computational Molecular Studio.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4><i class="fa-solid fa-sitemap"></i> Platform Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Main Portal Overview</a></li>
+          <li><a href="lab.html"><i class="fa-solid fa-angle-right"></i> 3D Simulation Lab (Ad-Free)</a></li>
+          <li><a href="encyclopedia.html"><i class="fa-solid fa-angle-right"></i> Reaction Encyclopedia</a></li>
+          <li><a href="instruments.html"><i class="fa-solid fa-angle-right"></i> 1,250+ Instruments & Manuals</a></li>
+          <li><a href="periodic-molecules.html"><i class="fa-solid fa-angle-right"></i> Periodic Table & 3D Molecules</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4><i class="fa-solid fa-graduation-cap"></i> Academic Syllabus</h4>
+        <ul class="footer-links">
+          <li><a href="encyclopedia.html?cat=organic_named"><i class="fa-solid fa-angle-right"></i> Named Organic Reactions</a></li>
+          <li><a href="encyclopedia.html?cat=inorganic_salt"><i class="fa-solid fa-angle-right"></i> Qualitative Salt Analysis</a></li>
+          <li><a href="encyclopedia.html?cat=redox_electro"><i class="fa-solid fa-angle-right"></i> Volumetric & Redox Titrations</a></li>
+          <li><a href="periodic-molecules.html"><i class="fa-solid fa-angle-right"></i> Quantum Orbitals (s, p, d, f)</a></li>
+          <li><a href="periodic-molecules.html#molecules"><i class="fa-solid fa-angle-right"></i> PubChem 3D Conformer Studio</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4><i class="fa-solid fa-scale-balanced"></i> Legal, Compliance & Safety</h4>
+        <ul class="footer-links">
+          <li><a href="legal.html#privacy"><i class="fa-solid fa-angle-right"></i> Privacy Policy & Data Security</a></li>
+          <li><a href="legal.html#terms"><i class="fa-solid fa-angle-right"></i> Terms of Service</a></li>
+          <li><a href="legal.html#safety"><i class="fa-solid fa-angle-right"></i> Laboratory Safety Disclaimer</a></li>
+          <li><a href="legal.html#contact"><i class="fa-solid fa-angle-right"></i> Institutional Contact</a></li>
+          <li><a href="ads.txt" target="_blank" rel="noopener"><i class="fa-solid fa-angle-right"></i> Authorized Digital Sellers (ads.txt)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 ChemVerse 3D Virtual Chemistry Platform. All rights reserved.</span>
+      <span>Zero Client-Side Secret Exposure • AdSense Auto-Ads Compliant</span>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       7. REMOTE LIVE NOTIFICATION CONTROLLER & MOBILE MENU SCRIPT
+       ========================================================================= -->
+  <script>
+    (function () {
+      "use strict";
+
+      /**
+       * LIVE REMOTE NOTIFICATION CONFIGURATION
+       * To update the live notification bar anytime WITHOUT redeploying your website:
+       * Point REMOTE_NOTIFICATION_URL to any raw GitHub Gist URL, JSONBin URL, or npoint.io JSON URL
+       * returning: { "active": true, "type": "EXAM ALERT", "message": "Your live text...", "linkText": "Open Lab", "linkUrl": "lab.html" }
+       */
+      const REMOTE_NOTIFICATION_URL = "https://gist.githubusercontent.com/raw/chemverse-live-banner.json";
+
+      const bar = document.getElementById("live-notification-bar");
+      const typeEl = document.getElementById("notif-type");
+      const msgEl = document.getElementById("notif-message");
+      const linkEl = document.getElementById("notif-link");
+      const closeBtn = document.getElementById("btn-close-notif");
+
+      async function syncLiveNotification() {
+        try {
+          const res = await fetch(REMOTE_NOTIFICATION_URL + "?t=" + Date.now(), { cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data && data.active === false) {
+            bar.classList.add("hidden");
+            return;
+          }
+          if (data.type && typeEl) typeEl.textContent = data.type;
+          if (data.message && msgEl) msgEl.textContent = data.message;
+          if (data.linkUrl && linkEl) {
+            linkEl.href = data.linkUrl;
+            linkEl.querySelector("span").textContent = data.linkText || "View Details";
+          }
+        } catch (_) {
+          // Keeps default announcement active when offline or before remote Gist is configured
+        }
+      }
+
+      syncLiveNotification();
+      // Poll every 60 seconds so changes to your remote JSON appear live on users' screens
+      setInterval(syncLiveNotification, 60000);
+
+      closeBtn?.addEventListener("click", function () {
+        bar?.classList.add("hidden");
+      });
+
+      // Mobile Navigation Toggle
+      document.getElementById("btn-mobile-menu")?.addEventListener("click", function () {
+        document.getElementById("site-nav")?.classList.toggle("open");
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+google.com, pub-8123739878680268, DIRECT, f08c47fec0942fa0
+chemverse-3d/
+├── index.html               (Main Executive Portal + Live Remote Notification Bar + Auto-Ads)
+├── lab.html                 (100% Ad-Free 3D Simulation Lab + Spatial Heating + GHS Pop-Up)
+├── encyclopedia.html        (Class XI & XII Reaction Encyclopedia + Custom Reaction Form)
+├── instruments.html         (1,250+ Instruments Directory + CBSE/NCERT Practical Manuals)
+├── periodic-molecules.html  (118-Element 3D Quantum Periodic Table + PubChem 3D Molecules)
+├── legal.html               (Privacy Policy, AdSense Disclosures, Terms & Safety Disclaimer)
+├── style.css                (Unified Formal Stylesheet)
+├── core-data.js             (Shared Database, Thermodynamics Engine & Web Audio Synth)
+├── lab-engine.js            (3D WebGL2 Multi-Vessel Spatial Physics & Secure AI Client)
+├── ads.txt                  (Google AdSense Verification Record)
+└── api/
+    └── gemini-proxy.js      (Server-side proxy reading process.env.GEMINI_API_KEY)
